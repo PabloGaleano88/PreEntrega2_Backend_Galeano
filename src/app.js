@@ -33,11 +33,10 @@ app.use((req, res, next) => {
 
 socketServer.on('connection', async (socket) => {
     console.log(`cliente ${socket.id} conectado`)
-    const info = await productManager.getAll()
-    socket.emit("actualizar_realtimeproducts", info)
+    const {payload: products} = await productManager.getAll()
+    socket.emit("actualizar_realtimeproducts", products)
     const message = await messageModel.find().lean()
         socketServer.emit('new_message', message)
-
     socket.on('mensaje', async (data) => {
         await messageModel.create(data)
         const message = await messageModel.find().lean()

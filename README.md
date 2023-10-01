@@ -9,6 +9,10 @@
 
 ##
 
+* Se hicieron los test propuestos.
+
+* El cart donde se agregan los productos está hardcodeado según lo indicado por el profe. 
+
 * Se debe realizar las siguientes instalaciones en caso de no disponer de las mismas en el equipo
 
 #### Nodemon
@@ -31,6 +35,9 @@ npm install multer
 ### Mongoose
 npm install mongoose
 
+### Mongoose Paginate
+npm install mongoose-paginate-v2
+
 ##
 * Para correr  la aplicación en modo desarrollador se debe escribir en la terminal:
 ```
@@ -43,6 +50,7 @@ npm start
 
 se abrirá el puerto 8080, con lo cual se puede interactuar con la app a traves de los siguientes endpoints:
 
+[http://localhost:8080/products/](http://localhost:8080/products)
 
 [http://localhost:8080/api/products/](http://localhost:8080/api/products/)
 
@@ -53,6 +61,7 @@ se abrirá el puerto 8080, con lo cual se puede interactuar con la app a traves 
 [http://localhost:8080/realtimeproducts/](http://localhost:8080/realtimeproducts)  -> con websockets
 
 [http://localhost:8080/chat/](http://localhost:8080/chat)
+
 
 Tener en cuenta que para probar con el formulario en realtimeproducts se deben llenar todos los campos
 

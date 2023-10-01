@@ -6,15 +6,9 @@ const productManager = new ProductManager()
 const router = Router()
 
 router.get('/', async (req, res) => {
-    const limit = req.query.limit
-    if (limit) {
-        const productsWLimit = await productManager.getAll(limit)
-        return res.status(200).send(productsWLimit)
-    }
-    else{
-        const products = await productManager.getAll()
-        res.status(200).send(products)
-    }
+    const {limit,page,sort,query} = req.query
+    const product = await productManager.getAll(query,limit,page,sort)
+    res.send(product)
 })
 
 router.get('/:pid', async (req, res) => {

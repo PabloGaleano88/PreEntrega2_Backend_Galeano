@@ -17,15 +17,59 @@ class ProductManager {
     }
 
 
-    async getAll(limit) {
-        let products
-        if (limit) {
-            products = await productsModel.find().limit(limit).lean()
+    async getAll(urlQuery, urlLimit, urlPage, urlSort) {
+        let response = {}
+
+        try {
+
+            const filter = urlQuery ? { [urlQuery.split(':')[0]]: urlQuery.split(':')[1] } : {}
+                const sortMapper = {
+                asc: { price: 1 },
+                desc: { price: -1 }
+            }
+
+            const limitQuery = urlLimit ? parseInt(urlLimit, 10) : 10
+            const pageQuery = urlPage ? parseInt(urlPage, 10) : 1
+            const sortQuery = sortMapper[urlSort] ?? undefined
+
+            const products = await productsModel.paginate(filter, {
+                limit: limitQuery,
+                page: pageQuery,
+                sort: sortQuery,
+                lean: true,
+            })
+
+            response = {
+                status: 'success',
+                payload: products.docs,
+                totalDocs: products.totalDocs,
+                limit: products.limit,
+                totalPages: products.totalPages,
+                page: products.page,
+                pagingCounter: products.pagingCounter,
+                hasPrevPage: products.hasPrevPage,
+                hasNextPage: products.hasNextPage,
+                prevPage: products.prevPage,
+                nextPage: products.nextPage,
+            };
         }
-        else {
-            products = await productsModel.find().lean()
+        catch (e) {
+            response = {
+                status: 'error',
+                payload: null,
+                totalDocs: null,
+                limit: null,
+                totalPages: null,
+                page: null,
+                pagingCounter: null,
+                hasPrevPage: null,
+                hasNextPage: null,
+                prevPage: null,
+                nextPage: null,
+            }
         }
-        return products
+
+        return (response)
     }
 
     async delete(id) {
@@ -34,12 +78,12 @@ class ProductManager {
     }
 
     async findById(id) {
-        try{
+        try {
             const product = await productsModel.findById(id)
             return product
         }
-        catch(error){
-            return(`Producto con ID:${id} no encontrado`)
+        catch (error) {
+            return (`Producto con ID:${id} no encontrado`)
         }
     }
 
