@@ -30,13 +30,16 @@ npm install socket.io
 ### Multer
 ```
 npm install multer
-
 ```
 ### Mongoose
+```
 npm install mongoose
+```
 
 ### Mongoose Paginate
+```
 npm install mongoose-paginate-v2
+```
 
 ##
 * Para correr  la aplicación en modo desarrollador se debe escribir en la terminal:
